@@ -7,12 +7,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { ShieldCheck, LockKeyhole } from 'lucide-react';
 import { Alert, AlertDescription } from '@/components/ui/alert';
-
-// Only same-site paths, never "//host" or a full URL.
-function nextPath(): string {
-  const raw = new URLSearchParams(window.location.search).get('next');
-  return raw && raw.startsWith('/') && !raw.startsWith('//') && !raw.startsWith('/\\') ? raw : '/home';
-}
+import { safeNextPath } from '@/lib/auth/next-path';
 
 export default function LoginPage() {
   const [pin, setPin] = useState('');
@@ -42,7 +37,8 @@ export default function LoginPage() {
       });
       const data = (await res.json().catch(() => null)) as { ok?: boolean; error?: string } | null;
       if (res.ok && data?.ok) {
-        window.location.assign(nextPath());
+        const next = new URLSearchParams(window.location.search).get('next');
+        window.location.assign(safeNextPath(next, window.location.origin));
         return;
       }
       setError(data?.error || 'Sign-in did not work. Please try again.');

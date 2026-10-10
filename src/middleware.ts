@@ -6,13 +6,9 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 import { SESSION_COOKIE, sessionSecret, verifySessionToken } from '@/lib/auth/session';
+import { safeNextPath } from '@/lib/auth/next-path';
 
 const PUBLIC_PATHS = new Set(['/login', '/api/auth', '/api/cleanup-cache']);
-
-// Only same-site paths, never "//host" or a full URL.
-function safeNext(raw: string | null): string {
-  return raw && raw.startsWith('/') && !raw.startsWith('//') && !raw.startsWith('/\\') ? raw : '/home';
-}
 
 export async function middleware(request: NextRequest) {
   const { pathname, search } = request.nextUrl;
@@ -20,7 +16,7 @@ export async function middleware(request: NextRequest) {
 
   if (pathname === '/login') {
     if (signedIn) {
-      return NextResponse.redirect(new URL(safeNext(request.nextUrl.searchParams.get('next')), request.url));
+      return NextResponse.redirect(new URL(safeNextPath(request.nextUrl.searchParams.get('next'), request.nextUrl.origin), request.url));
     }
     return NextResponse.next();
   }
