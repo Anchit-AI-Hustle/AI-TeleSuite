@@ -89,6 +89,7 @@
     "zod": "^3.24.2"
   },
   "devDependencies": {
+    "@tailwindcss/postcss": "^4.3.3",
     "@types/js-base64": "^3.3.1",
     "@types/jszip": "^3.4.1",
     "@types/node": "^20",
@@ -96,12 +97,11 @@
     "@types/react-dom": "^18",
     "@types/wav": "^1.0.4",
     "@types/xlsx": "^0.0.36",
-    "autoprefixer": "^10.4.17",
     "chokidar-cli": "^3.0.0",
     "concurrently": "^9.2.1",
     "eslint": "9.38.0",
     "eslint-config-next": "15.5.6",
-    "globals": "^17.13.0",
+    "globals": "^16.5.0",
     "husky": "^9.1.7",
     "postcss": "^8",
     "raw-loader": "^4.0.2",

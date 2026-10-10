@@ -203,7 +203,7 @@ export default function DataAnalysisPage() {
            </div>
         )}
         {!isLoading && !analysisResult && !formError && (
-          <Card className="w-full max-w-2xl shadow-sm">
+          <Card className="w-full max-w-2xl shadow-xs">
             <CardHeader>
                 <CardTitle className="text-lg flex items-center">
                     <Brain className="h-5 w-5 mr-2 text-accent"/>

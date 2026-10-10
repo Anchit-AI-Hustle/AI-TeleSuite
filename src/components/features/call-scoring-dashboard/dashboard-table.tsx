@@ -266,7 +266,7 @@ export function CallScoringDashboardTable({ history, selectedIds, onSelectionCha
       <div className="w-full mt-2 shadow-lg rounded-lg border bg-card">
         <ScrollArea className="h-[calc(100vh-340px)] md:h-[calc(100vh-310px)]">
           <Table>
-            <TableHeader className="sticky top-0 bg-muted/50 backdrop-blur-sm z-10">
+            <TableHeader className="sticky top-0 bg-muted/50 backdrop-blur-xs z-10">
               <TableRow>
                  <TableHead className="w-[50px]">
                     <Checkbox
@@ -373,7 +373,7 @@ export function CallScoringDashboardTable({ history, selectedIds, onSelectionCha
                     {selectedItem.details.agentNameFromForm && `, Agent: ${selectedItem.details.agentNameFromForm}`}
                 </DialogDescription>
             </DialogHeader>
-            <ScrollArea className="flex-grow overflow-y-auto">
+            <ScrollArea className="grow overflow-y-auto">
               <div className="p-6">
                 {selectedItem.details.scoreOutput ? (
                     <CallScoringResultsCard 

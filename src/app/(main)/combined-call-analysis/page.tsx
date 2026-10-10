@@ -375,7 +375,7 @@ export default function CombinedCallAnalysisPage() {
                 <CardFooter className="pt-6">
                   <div className="w-full flex flex-col items-center gap-2">
                     <p className="text-sm font-semibold text-primary flex items-center"><Sparkles className="w-4 h-4 mr-2 text-accent"/>Next Step: Turn Insights into Action</p>
-                    <Button onClick={() => setIsPitchDialogOpen(true)} variant="default" className="w-full bg-gradient-to-r from-primary to-accent text-primary-foreground" disabled={isGeneratingPitches}>
+                    <Button onClick={() => setIsPitchDialogOpen(true)} variant="default" className="w-full bg-linear-to-r/srgb from-primary to-accent text-primary-foreground" disabled={isGeneratingPitches}>
                         {isGeneratingPitches ? <LoadingSpinner size={16} className="mr-2"/> : <Wand2 className="mr-2 h-4 w-4"/>}
                         {isGeneratingPitches ? 'Generating Optimized Pitches...' : 'Generate Optimized Pitches from This Analysis'}
                     </Button>

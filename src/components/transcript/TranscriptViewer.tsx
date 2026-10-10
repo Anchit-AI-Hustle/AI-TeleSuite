@@ -124,7 +124,7 @@ export function TranscriptViewer({
               role="status"
               aria-label={`System event: ${turn.text}`}
             >
-              <Info className="h-4 w-4 flex-shrink-0" />
+              <Info className="h-4 w-4 shrink-0" />
               <span>{turn.text}</span>
               {showTimestamps && (
                 <span className="text-xs opacity-70">
@@ -148,7 +148,7 @@ export function TranscriptViewer({
             aria-label={`${displayName} said: ${turn.text}`}
           >
             {/* Avatar */}
-            <Avatar className="h-8 w-8 flex-shrink-0 mt-1">
+            <Avatar className="h-8 w-8 shrink-0 mt-1">
               <AvatarFallback
                 className={cn(
                   "transcript-avatar-" + (turn.speaker === 'AGENT' ? 'agent' : 'user')

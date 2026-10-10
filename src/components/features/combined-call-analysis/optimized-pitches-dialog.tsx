@@ -83,7 +83,7 @@ export function OptimizedPitchesDialog({ isOpen, onClose, product, optimizedPitc
                         Based on the combined call analysis, generate and review optimized pitches for selected customer cohorts.
                     </DialogDescription>
                 </DialogHeader>
-                <div className="flex-grow p-4 overflow-y-auto">
+                <div className="grow p-4 overflow-y-auto">
                     <div className="p-4 border rounded-lg bg-muted/20 space-y-3 mb-4">
                         <h4 className="font-semibold text-foreground flex items-center"><Users className="mr-2 h-5 w-5 text-primary" />Select Cohorts to Generate</h4>
                         <div className="flex items-center gap-2">

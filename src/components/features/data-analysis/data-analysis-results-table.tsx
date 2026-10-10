@@ -49,7 +49,7 @@ export function DataAnalysisResultsTable({ results }: DataAnalysisResultsTablePr
         </div>
         <ScrollArea className="h-[calc(100vh-450px)] md:h-[600px]">
           <Table>
-            <TableHeader className="sticky top-0 bg-muted/50 backdrop-blur-sm">
+            <TableHeader className="sticky top-0 bg-muted/50 backdrop-blur-xs">
               <TableRow>
                 <TableHead className="w-[50px]">SNo.</TableHead>
                 <TableHead>File Name</TableHead>
@@ -115,7 +115,7 @@ export function DataAnalysisResultsTable({ results }: DataAnalysisResultsTablePr
                     {selectedResult.userDescription && ` | User Goal: ${selectedResult.userDescription}`}
                 </DialogDescription>
             </DialogHeader>
-            <ScrollArea className="flex-grow overflow-y-auto">
+            <ScrollArea className="grow overflow-y-auto">
               <div className="p-6">
                 <DataAnalysisResultsCard 
                     reportOutput={selectedResult.analysisOutput}

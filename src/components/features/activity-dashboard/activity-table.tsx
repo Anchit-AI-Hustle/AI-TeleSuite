@@ -360,7 +360,7 @@ export function ActivityTable({ activities }: ActivityTableProps) {
                 </AccordionTrigger>
                 <AccordionContent className="pt-1 text-sm bg-muted/20 p-3 rounded-b-md">
                     <ScrollArea className="max-h-60 overflow-y-auto">
-                        <pre className="p-2 bg-background/30 rounded-md text-xs whitespace-pre-wrap break-words">{inputDetails}</pre>
+                        <pre className="p-2 bg-background/30 rounded-md text-xs whitespace-pre-wrap wrap-break-word">{inputDetails}</pre>
                     </ScrollArea>
                 </AccordionContent>
             </AccordionItem>
@@ -414,7 +414,7 @@ export function ActivityTable({ activities }: ActivityTableProps) {
         outputTitle = "Data Analysis Report";
         outputIcon = <FileSearch className="mr-2 h-5 w-5 text-accent"/>;
     } else if (isKnowledgeBaseDetails(activity.details) && activity.module === "Knowledge Base Management") {
-        outputContent = <pre className="p-2 bg-background/30 rounded-md text-xs whitespace-pre-wrap break-words">{formatKnowledgeBaseInputs(activity.details)}</pre>;
+        outputContent = <pre className="p-2 bg-background/30 rounded-md text-xs whitespace-pre-wrap wrap-break-word">{formatKnowledgeBaseInputs(activity.details)}</pre>;
         outputTitle = "Knowledge Base Action Details";
         outputIcon = <DatabaseZap className="mr-2 h-5 w-5 text-accent"/>;
     }
@@ -436,9 +436,9 @@ export function ActivityTable({ activities }: ActivityTableProps) {
 
   return (
     <>
-      <ScrollArea className="h-[calc(100vh-300px)] md:h-[calc(100vh-240px)] rounded-md border shadow-sm bg-card">
+      <ScrollArea className="h-[calc(100vh-300px)] md:h-[calc(100vh-240px)] rounded-md border shadow-xs bg-card">
         <Table>
-          <TableHeader className="sticky top-0 bg-card z-10 shadow-sm">
+          <TableHeader className="sticky top-0 bg-card z-10 shadow-xs">
             <TableRow>
               <TableHead onClick={() => requestSort('timestamp')} className="cursor-pointer py-2.5 px-3 text-xs">
                 Date {getSortIndicator('timestamp')}
@@ -496,7 +496,7 @@ export function ActivityTable({ activities }: ActivityTableProps) {
                 {selectedActivity.product && `, Product: ${selectedActivity.product}`}
               </DialogDescription>
             </DialogHeader>
-            <ScrollArea className="flex-grow p-4 overflow-y-auto">
+            <ScrollArea className="grow p-4 overflow-y-auto">
               {isErrorDetails(selectedActivity.details) ? (
                  <div className="space-y-3 text-sm text-destructive bg-destructive/10 p-4 rounded-md">
                     <p className="font-semibold text-md">Error Occurred:</p>
@@ -523,7 +523,7 @@ export function ActivityTable({ activities }: ActivityTableProps) {
                     </AccordionTrigger>
                     <AccordionContent className="pt-1 text-sm bg-muted/20 p-3 rounded-b-md">
                         <ScrollArea className="max-h-80 overflow-y-auto">
-                            <pre className="bg-background/30 p-2 rounded-md text-xs whitespace-pre-wrap break-words">
+                            <pre className="bg-background/30 p-2 rounded-md text-xs whitespace-pre-wrap wrap-break-word">
                                 {formatDetailsForPre(selectedActivity)}
                             </pre>
                         </ScrollArea>

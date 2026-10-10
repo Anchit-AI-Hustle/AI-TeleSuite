@@ -202,7 +202,7 @@ export function CallScoringResultsTable({ results, progressById }: CallScoringRe
         </div>
         <ScrollArea className="h-[calc(100vh-450px)] md:h-[600px]">
           <Table>
-            <TableHeader className="sticky top-0 bg-muted/50 backdrop-blur-sm z-10">
+            <TableHeader className="sticky top-0 bg-muted/50 backdrop-blur-xs z-10">
               <TableRow>
                 <TableHead className="w-[50px]">SNo.</TableHead>
                 <TableHead>File Name / Source</TableHead>
@@ -276,7 +276,7 @@ export function CallScoringResultsTable({ results, progressById }: CallScoringRe
                     File: {selectedResult.details.fileName}
                 </DialogDescription>
             </DialogHeader>
-            <ScrollArea className="flex-grow overflow-y-auto">
+            <ScrollArea className="grow overflow-y-auto">
               <div className="p-6">
                   {selectedResult.details.scoreOutput ? (
                     <CallScoringResultsCard
