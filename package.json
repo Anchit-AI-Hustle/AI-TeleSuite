@@ -101,7 +101,7 @@
     "concurrently": "^9.2.1",
     "eslint": "9.38.0",
     "eslint-config-next": "15.5.6",
-    "globals": "^16.5.0",
+    "globals": "^17.13.0",
     "husky": "^9.1.7",
     "postcss": "^8",
     "raw-loader": "^4.0.2",
