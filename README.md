@@ -5,6 +5,21 @@ This is a NextJS starter in Firebase Studio.
 To get started, take a look at src/app/page.tsx.
 
 This document reflects the v1.1 state of the application. The application features are now stable. For a complete guide to understanding and replicating this application from scratch, please refer to the detailed instructions in [REPLICATION_PROMPT.md](./REPLICATION_PROMPT.md).
+
+## Sign-in
+
+The app has one way in: a 4-digit PIN, checked on the server by `POST /api/auth`.
+A right PIN sets an httpOnly session cookie (30 days); `src/middleware.ts` turns away
+every page and API route without it, except `/login`, `/api/auth` and the cache-cleanup cron.
+
+1. Pick a PIN and run `node scripts/pin-hash.mjs 4827`.
+2. Set the printed `salt:hash` as `APP_PIN_HASH` on the server (Vercel project env vars, or `.env.local`).
+   Until it is set, sign-in stays closed.
+3. Optional: set `UPSTASH_REDIS_REST_URL` and `UPSTASH_REDIS_REST_TOKEN` so the lockout
+   (5 wrong tries, then 15 minutes) is shared across server instances.
+
+To change the PIN, set a new `APP_PIN_HASH`. Every signed-in device is signed out.
+
 # Test change for auto-deployment
 
 ## App Version Switcher
