@@ -9,9 +9,6 @@ const nextConfig = {
   typescript: {
     ignoreBuildErrors: true,
   },
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
   // Disable type checking during dev for faster compilation
   webpack: (config, { dev, isServer }) => {
     if (dev && !isServer) {
