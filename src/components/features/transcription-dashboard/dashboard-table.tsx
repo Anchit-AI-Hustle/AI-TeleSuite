@@ -170,7 +170,7 @@ export function TranscriptionDashboardTable({ history, selectedIds, onSelectionC
       <div className="w-full mt-2 shadow-lg rounded-lg border bg-card">
         <ScrollArea className="h-[calc(100vh-340px)] md:h-[calc(100vh-310px)]">
           <Table>
-            <TableHeader className="sticky top-0 bg-muted/50 backdrop-blur-sm z-10">
+            <TableHeader className="sticky top-0 bg-muted/50 backdrop-blur-xs z-10">
               <TableRow>
                 <TableHead className="w-[50px]">
                     <Checkbox
@@ -220,7 +220,7 @@ export function TranscriptionDashboardTable({ history, selectedIds, onSelectionC
                         {hasError || !transcriptText ? (
                           <span className="text-destructive italic text-xs">{item.details.error || "Transcript not available."}</span>
                         ) : (
-                          <p className="text-xs text-muted-foreground whitespace-pre-wrap break-words truncate_3_lines">
+                          <p className="text-xs text-muted-foreground whitespace-pre-wrap wrap-break-word truncate_3_lines">
                             {transcriptText.substring(0, 150)}{transcriptText.length > 150 ? '...' : ''}
                           </p>
                         )}
@@ -279,7 +279,7 @@ export function TranscriptionDashboardTable({ history, selectedIds, onSelectionC
                     {selectedItem.agentName && `, By: ${selectedItem.agentName}`}
                 </DialogDescription>
             </DialogHeader>
-            <div className="p-4 sm:p-6 flex-grow overflow-y-hidden flex flex-col">
+            <div className="p-4 sm:p-6 grow overflow-y-hidden flex flex-col">
               <div className="flex justify-between items-center flex-wrap gap-2 mb-3">
                    <div className="flex items-center gap-2 text-sm text-muted-foreground">
                       <Badge variant="outline">
@@ -323,7 +323,7 @@ export function TranscriptionDashboardTable({ history, selectedIds, onSelectionC
                   </div>
                 </div>
               )}
-              <ScrollArea className="flex-grow w-full rounded-md border p-3 bg-background">
+              <ScrollArea className="grow w-full rounded-md border p-3 bg-background">
                   {selectedItem.details.error ? (
                     <div className="h-full flex items-center justify-center">
                         <p className="text-destructive text-center p-4">Error during transcription: {selectedItem.details.error}</p>

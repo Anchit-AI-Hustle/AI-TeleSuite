@@ -215,11 +215,11 @@ export const TranscriptDisplay = ({ transcript }: { transcript: string }) => {
             )}
           >
             {(isAgent || isSystem) && (
-              <Avatar className="h-9 w-9 shrink-0 border-2 shadow-sm">
+              <Avatar className="h-9 w-9 shrink-0 border-2 shadow-xs">
                 <AvatarFallback className={cn(
                   isAgent 
-                    ? "bg-gradient-to-br from-blue-500 to-blue-600 text-white font-semibold" 
-                    : "bg-gradient-to-br from-gray-400 to-gray-500 text-white"
+                    ? "bg-linear-to-br/srgb from-blue-500 to-blue-600 text-white font-semibold" 
+                    : "bg-linear-to-br/srgb from-gray-400 to-gray-500 text-white"
                 )}>
                   {isAgent ? <Bot size={20} /> : <Info size={20} />}
                 </AvatarFallback>
@@ -239,12 +239,12 @@ export const TranscriptDisplay = ({ transcript }: { transcript: string }) => {
               )}
               <div
                 className={cn(
-                  'p-4 rounded-2xl shadow-md text-sm whitespace-pre-wrap break-words leading-relaxed transition-all hover:shadow-lg',
+                  'p-4 rounded-2xl shadow-md text-sm whitespace-pre-wrap wrap-break-word leading-relaxed transition-all hover:shadow-lg',
                   isAgent
-                    ? 'bg-gradient-to-br from-blue-50 to-blue-100 border-2 border-blue-200 text-blue-900'
+                    ? 'bg-linear-to-br/srgb from-blue-50 to-blue-100 border-2 border-blue-200 text-blue-900'
                     : isSystem
-                    ? 'bg-gradient-to-br from-gray-50 to-gray-100 border-2 border-gray-200 text-gray-700'
-                    : 'bg-gradient-to-br from-green-50 to-green-100 border-2 border-green-200 text-green-900'
+                    ? 'bg-linear-to-br/srgb from-gray-50 to-gray-100 border-2 border-gray-200 text-gray-700'
+                    : 'bg-linear-to-br/srgb from-green-50 to-green-100 border-2 border-green-200 text-green-900'
                 )}
               >
                 <div className="flex items-center gap-2 mb-2 pb-2 border-b border-current/10">
@@ -269,8 +269,8 @@ export const TranscriptDisplay = ({ transcript }: { transcript: string }) => {
             </div>
 
             {!isAgent && !isSystem && (
-              <Avatar className="h-9 w-9 shrink-0 border-2 shadow-sm">
-                <AvatarFallback className="bg-gradient-to-br from-green-500 to-green-600 text-white font-semibold">
+              <Avatar className="h-9 w-9 shrink-0 border-2 shadow-xs">
+                <AvatarFallback className="bg-linear-to-br/srgb from-green-500 to-green-600 text-white font-semibold">
                   <User size={20} />
                 </AvatarFallback>
               </Avatar>

@@ -473,7 +473,7 @@ export default function HomePage() {
       <PageHeader title="AI_TeleSuite Dashboard" />
       <main className="flex-1 overflow-y-auto p-4 md:p-6">
         <div className="container mx-auto">
-          <Card className="mb-8 shadow-lg border-primary/20 bg-gradient-to-br from-background to-primary/10">
+          <Card className="mb-8 shadow-lg border-primary/20 bg-transparent bg-linear-to-br/srgb from-background to-primary/10">
             <CardHeader>
               <CardTitle className="text-3xl font-bold text-primary flex items-center">
                 <Home className="h-8 w-8 mr-3 text-accent" />
@@ -490,7 +490,7 @@ export default function HomePage() {
                         return (
                             <div 
                               key={index} 
-                              className="flex items-center p-3 bg-background/50 rounded-lg shadow-sm border border-border/50 cursor-pointer hover:bg-background/70 transition-colors"
+                              className="flex items-center p-3 bg-background/50 rounded-lg shadow-xs border border-border/50 cursor-pointer hover:bg-background/70 transition-colors"
                               onClick={() => {
                                 logFeature({
                                   featureName: 'OverviewStat',
@@ -513,7 +513,7 @@ export default function HomePage() {
                         );
                     })}
                     <div 
-                      className="flex items-center p-3 bg-background/50 rounded-lg shadow-sm border border-border/50 col-span-1 sm:col-span-2 lg:col-span-1 lg:col-start-3 cursor-pointer hover:bg-background/70 transition-colors"
+                      className="flex items-center p-3 bg-background/50 rounded-lg shadow-xs border border-border/50 col-span-1 sm:col-span-2 lg:col-span-1 lg:col-start-3 cursor-pointer hover:bg-background/70 transition-colors"
                       onClick={() => {
                         logFeature({
                           featureName: 'SystemStatus',
@@ -593,7 +593,7 @@ export default function HomePage() {
                         {feature.description}
                       </CardDescription>
                     </CardHeader>
-                    <CardContent className="flex-grow pt-2 space-y-2">
+                    <CardContent className="grow pt-2 space-y-2">
                       {!isClient ? (
                         <>
                           <Skeleton className="h-5 w-3/4" />

@@ -390,7 +390,7 @@ export default function BatchAudioDownloaderPage() {
             <Button 
                 onClick={() => void handleDownload()} 
                 disabled={isLoading || (inputType === 'urls' && !urls.trim()) || (inputType === 'excel' && (!excelFile || !urlColumn.trim()))} 
-                className="w-full !mt-6"
+                className="w-full mt-6!"
             >
               {isLoading ? (
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />

@@ -52,13 +52,13 @@ export function ConversationTurn({ turn, currentlyPlayingId, wordIndex = -1 }: C
              </span>
         </div>
         <Card className={cn(
-            "max-w-full w-fit p-3 rounded-xl shadow-sm transition-colors",
+            "max-w-full w-fit p-3 rounded-xl shadow-xs transition-colors",
             isAI 
               ? cn("rounded-bl-none text-foreground", isLive ? "border border-primary/50 bg-primary/5 animate-pulse" : "bg-muted/50")
               : cn("rounded-br-none text-accent-foreground", isLive ? "border border-primary bg-primary/20 animate-pulse" : "bg-accent/80")
         )}>
             <CardContent className="p-0 text-sm">
-                <p className="whitespace-pre-wrap break-words leading-relaxed">
+                <p className="whitespace-pre-wrap wrap-break-word leading-relaxed">
                     {isCurrentlyPlaying && wordIndex > -1 ? (
                       words.map((word, i) => {
                         const trimmed = word.trim();

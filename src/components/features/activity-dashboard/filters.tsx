@@ -41,7 +41,7 @@ export function ActivityDashboardFilters({ onFilterChange, availableModules, ava
   };
 
   return (
-    <Card className="shadow-sm">
+    <Card className="shadow-xs">
       <CardHeader className="py-4 px-4 md:px-6">
         <CardTitle className="text-md md:text-lg">Filter Activities</CardTitle>
       </CardHeader>

@@ -1224,7 +1224,7 @@ export default function VoiceSalesAgentPage() {
                              <Label>AI Voice Profile (Agent)</Label>
                               <div className="mt-2 flex items-center gap-2">
                                 <Select value={selectedVoiceId} onValueChange={setSelectedVoiceId} disabled={isCallInProgress}>
-                                    <SelectTrigger className="flex-grow"><SelectValue placeholder={"Select a voice"} /></SelectTrigger>
+                                    <SelectTrigger className="grow"><SelectValue placeholder={"Select a voice"} /></SelectTrigger>
                                     <SelectContent>{GOOGLE_PRESET_VOICES.map(v => <SelectItem key={v.id} value={v.id}>{v.name}</SelectItem>)}</SelectContent>
                                 </Select>
                                 <Button variant="outline" size="sm" onClick={handlePreviewVoice} disabled={isVoicePreviewPlaying || isCallInProgress}>
@@ -1303,7 +1303,7 @@ export default function VoiceSalesAgentPage() {
                     return (
                       <div className="flex items-start gap-2.5 my-3 justify-end user-line opacity-80">
                         <div className="flex flex-col gap-1 w-full max-w-[80%] items-end">
-                          <Card className="max-w-full w-fit p-3 rounded-xl shadow-sm bg-accent/40 text-accent-foreground rounded-br-none animate-pulse">
+                          <Card className="max-w-full w-fit p-3 rounded-xl shadow-xs bg-accent/40 text-accent-foreground rounded-br-none animate-pulse">
                             <CardContent className="p-0 text-sm">
                               <p className="italic">Listening...</p>
                             </CardContent>

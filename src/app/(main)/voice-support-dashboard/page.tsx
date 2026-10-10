@@ -357,7 +357,7 @@ export default function VoiceSupportDashboardPage() {
                     Customer: {selectedInteraction.details.flowInput.userName || "N/A"} | Product: {selectedInteraction.details.flowInput.product} | Date: {format(parseISO(selectedInteraction.timestamp), 'PPPP pppp')}
                 </DialogDesc>
                 </DialogHeader>
-                <ScrollArea className="flex-grow p-4 overflow-y-auto">
+                <ScrollArea className="grow p-4 overflow-y-auto">
                     {selectedInteraction.details.error && (
                         <Alert variant="destructive" className="mb-4">
                             <AlertCircleIcon className="h-4 w-4" />

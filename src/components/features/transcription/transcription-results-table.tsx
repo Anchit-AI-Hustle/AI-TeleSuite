@@ -241,7 +241,7 @@ export function TranscriptionResultsTable({ results }: TranscriptionResultsTable
         </div>
         <ScrollArea className="h-[calc(100vh-450px)] md:h-[500px]">
           <Table>
-            <TableHeader className="sticky top-0 bg-muted/50 backdrop-blur-sm z-10">
+            <TableHeader className="sticky top-0 bg-muted/50 backdrop-blur-xs z-10">
               <TableRow>
                 <TableHead className="w-[50px]">SNo.</TableHead>
                 <TableHead>File Name</TableHead>
@@ -270,7 +270,7 @@ export function TranscriptionResultsTable({ results }: TranscriptionResultsTable
                           <span className="text-destructive italic text-xs">{result.diarizedTranscript}</span>
                       ) : (
                           <ScrollArea className="h-16 max-w-full">
-                               <p className="text-xs text-muted-foreground whitespace-pre-wrap break-words">
+                               <p className="text-xs text-muted-foreground whitespace-pre-wrap wrap-break-word">
                                   {result.diarizedTranscript.substring(0, 200)}{result.diarizedTranscript.length > 200 && '...'}</p>
                           </ScrollArea>
                       )}
@@ -340,7 +340,7 @@ export function TranscriptionResultsTable({ results }: TranscriptionResultsTable
                 </div>
               </div>
             </DialogHeader>
-            <div className="flex-grow p-4 sm:p-6 overflow-y-auto">
+            <div className="grow p-4 sm:p-6 overflow-y-auto">
               <Tabs defaultValue="scoring" className="w-full">
                 <TabsList className="grid w-full grid-cols-2">
                     <TabsTrigger value="scoring">AI Call Scoring</TabsTrigger>

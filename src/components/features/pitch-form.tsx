@@ -338,7 +338,7 @@ export function PitchForm({ onSubmit, isLoading }: PitchFormProps) {
                 <span>If no direct file is uploaded, the pitch will be generated using relevant entries from your main Knowledge Base for the selected product.</span>
             </div>
 
-            <Button type="submit" className="w-full !mt-6" disabled={isLoading || !product}>
+            <Button type="submit" className="w-full mt-6!" disabled={isLoading || !product}>
               {isLoading ? "Generating Pitch..." : "Generate Pitch"}
             </Button>
           </form>

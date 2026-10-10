@@ -787,7 +787,7 @@ export default function VoiceSupportAgentPage() {
                               <div className="mt-2">
                                  <div className="flex items-center gap-2">
                                     <Select value={selectedVoiceId} onValueChange={setSelectedVoiceId} disabled={isInteractionStarted}>
-                                        <SelectTrigger className="flex-grow"><SelectValue placeholder={"Loading voices..."} /></SelectTrigger>
+                                        <SelectTrigger className="grow"><SelectValue placeholder={"Loading voices..."} /></SelectTrigger>
                                         <SelectContent>{GOOGLE_PRESET_VOICES.map(v => <SelectItem key={v.id} value={v.id}>{v.name}</SelectItem>)}</SelectContent>
                                     </Select>
                                     <Button variant="outline" size="sm" onClick={handlePreviewVoice} disabled={isVoicePreviewPlaying || isInteractionStarted}>
@@ -841,7 +841,7 @@ export default function VoiceSupportAgentPage() {
                         {callState === 'LISTENING' && (
                            <div className="flex items-start gap-2.5 my-3 justify-end user-line">
                               <div className="flex flex-col gap-1 w-full max-w-[80%] items-end">
-                                 <Card className="max-w-full w-fit p-3 rounded-xl shadow-sm bg-accent/80 text-accent-foreground rounded-br-none">
+                                 <Card className="max-w-full w-fit p-3 rounded-xl shadow-xs bg-accent/80 text-accent-foreground rounded-br-none">
                                     <CardContent className="p-0 text-sm">
                                       <p className="italic">{currentTranscription || " Listening..."}</p>
                                     </CardContent>

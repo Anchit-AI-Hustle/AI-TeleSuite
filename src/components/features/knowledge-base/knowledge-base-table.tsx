@@ -178,7 +178,7 @@ export function KnowledgeBaseTable({ files, onDeleteFile }: KnowledgeBaseTablePr
         <CardContent>
           <ScrollArea className="h-[calc(100vh-400px)] md:h-[500px]">
             <Table>
-              <TableHeader className="sticky top-0 bg-muted/50 backdrop-blur-sm z-10">
+              <TableHeader className="sticky top-0 bg-muted/50 backdrop-blur-xs z-10">
                 <TableRow>
                   <TableHead className="w-[50px]"></TableHead>
                   <TableHead onClick={() => requestSort('name')} className="cursor-pointer group">
@@ -285,7 +285,7 @@ export function KnowledgeBaseTable({ files, onDeleteFile }: KnowledgeBaseTablePr
                        <Download className="mr-2 h-4 w-4" /> Download Original File
                     </Button>
                 </div>
-                <div className="flex-grow p-2 sm:p-4 overflow-hidden">
+                <div className="grow p-2 sm:p-4 overflow-hidden">
                     <FilePreviewer file={fileToView} />
                 </div>
             </DialogContent>
@@ -324,7 +324,7 @@ function FilePreviewer({ file }: { file: KnowledgeFile | null }) {
             try {
                  if (file.isTextEntry && file.textContent) {
                     const pre = document.createElement('pre');
-                    pre.className = "whitespace-pre-wrap break-words text-sm";
+                    pre.className = "whitespace-pre-wrap wrap-break-word text-sm";
                     pre.textContent = file.textContent;
                     container.appendChild(pre);
                     return;
@@ -360,7 +360,7 @@ function FilePreviewer({ file }: { file: KnowledgeFile | null }) {
                     const response = await fetch(file.dataUri);
                     const text = await response.text();
                     const pre = document.createElement('pre');
-                    pre.className = "whitespace-pre-wrap break-words text-sm";
+                    pre.className = "whitespace-pre-wrap wrap-break-word text-sm";
                     pre.textContent = text;
                     container.appendChild(pre);
                 } else {
