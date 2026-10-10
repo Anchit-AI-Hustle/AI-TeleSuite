@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import React, { useState, useEffect, useMemo } from "react";
 import {
   Sidebar,
@@ -56,8 +56,6 @@ type SidebarNavGroup = {
 type SidebarNavSeparator = { type: 'separator' };
 
 type SidebarNavEntry = SidebarNavItem | SidebarNavGroup | SidebarNavSeparator;
-
-const AUTH_STORAGE_KEY = 'aiTeleSuiteDemoAuth';
 
 const navStructure: SidebarNavEntry[] = [
   { type: 'item', href: "/home", label: "Home", icon: Home },
@@ -135,7 +133,6 @@ const getItemIsActive = (itemHref: string, currentPath: string): boolean => {
 
 export function AppSidebar({ setIsPageLoading }: AppSidebarProps) {
   const pathname = usePathname();
-  const router = useRouter();
   const [isTransitioningTo, setIsTransitioningTo] = useState<string | null>(null);
   const { currentProfile, setCurrentProfile } = useUserProfile();
   const { logNavigation, logComponent } = useFeatureLogger();
@@ -194,10 +191,13 @@ export function AppSidebar({ setIsPageLoading }: AppSidebarProps) {
     setIsPageLoading(true);
     if (typeof window !== 'undefined') {
       window.localStorage.removeItem('aiTeleSuiteActiveUserProfile');
-      window.localStorage.removeItem(AUTH_STORAGE_KEY);
     }
     setCurrentProfile(USER_PROFILES[0] ?? "Anchit");
-    router.push('/login');
+    // Clear the httpOnly session cookie on the server, then load the sign-in
+    // page fresh so no cached signed-in page survives.
+    void fetch('/api/auth', { method: 'DELETE' })
+      .catch(() => undefined)
+      .finally(() => window.location.assign('/login'));
   };
 
   const renderNavItem = (item: SidebarNavLeaf, isSubItem = false) => {
