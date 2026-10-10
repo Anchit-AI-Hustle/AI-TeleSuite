@@ -174,7 +174,7 @@ export function TrainingMaterialDashboardTable({ history }: TrainingMaterialDash
       <div className="w-full mt-2 shadow-lg rounded-lg border bg-card">
         <ScrollArea className="h-[calc(100vh-280px)] md:h-[calc(100vh-250px)]">
           <Table>
-            <TableHeader className="sticky top-0 bg-muted/50 backdrop-blur-sm z-10">
+            <TableHeader className="sticky top-0 bg-muted/50 backdrop-blur-xs z-10">
               <TableRow>
                 <TableHead onClick={() => requestSort('deckTitle')} className="cursor-pointer">Material Title {getSortIndicator('deckTitle')}</TableHead>
                 <TableHead onClick={() => requestSort('deckFormatHint')} className="cursor-pointer">Format {getSortIndicator('deckFormatHint')}</TableHead>
@@ -239,7 +239,7 @@ export function TrainingMaterialDashboardTable({ history }: TrainingMaterialDash
                     Material: {selectedItem.details.materialOutput?.deckTitle || "N/A"} (Created: {format(parseISO(selectedItem.timestamp), 'PP p')})
                 </DialogDesc>
             </DialogHeader>
-            <ScrollArea className="flex-grow overflow-y-auto">
+            <ScrollArea className="grow overflow-y-auto">
               <div className="p-6 space-y-4">
                 {selectedItem.details.error ? (
                      <div className="space-y-3 text-sm text-destructive bg-destructive/10 p-4 rounded-md">

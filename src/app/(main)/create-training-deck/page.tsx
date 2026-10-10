@@ -556,7 +556,7 @@ export default function CreateTrainingDeckPage() {
         )}
 
         {!generatedMaterial && !isLoading && !error && (
-           <Card className="w-full max-w-2xl shadow-sm">
+           <Card className="w-full max-w-2xl shadow-xs">
             <CardHeader>
                 <CardTitle className="text-lg flex items-center">
                     <InfoIconLucide className="h-5 w-5 mr-2 text-accent"/>
@@ -587,7 +587,7 @@ export default function CreateTrainingDeckPage() {
                         <DialogTitle className="text-primary">Selected Knowledge Base Items ({selectedKnowledgeBaseItems.length})</DialogTitle>
                         <DialogDesc>Review the details of the KB items you've chosen for context.</DialogDesc>
                     </DialogHeader>
-                    <ScrollArea className="flex-grow p-1 pr-3 -mx-1">
+                    <ScrollArea className="grow p-1 pr-3 -mx-1">
                         <div className="space-y-4 p-4 rounded-md">
                             {selectedKnowledgeBaseItems.map(item => (
                                 <Card key={item.id} className="bg-muted/30">

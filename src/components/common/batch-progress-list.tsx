@@ -74,7 +74,7 @@ function BatchProgressListComponent({
   }
 
   return (
-    <div className={cn('w-full max-w-4xl rounded-lg border bg-card shadow-sm', className)}>
+    <div className={cn('w-full max-w-4xl rounded-lg border bg-card shadow-xs', className)}>
       <div className="px-4 py-3 border-b">
         <h3 className="text-sm font-semibold text-foreground">{title}</h3>
         {description && (

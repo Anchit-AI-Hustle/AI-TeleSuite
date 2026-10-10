@@ -26,7 +26,7 @@ export default function MainAppLayout({
     <>
       <AppSidebar setIsPageLoading={setIsPageLoading} />
       <SidebarInset className="bg-background relative">
-        <div className="sticky top-0 z-30 flex flex-col gap-0 border-b bg-background/95 px-4 py-2 backdrop-blur">
+        <div className="sticky top-0 z-30 flex flex-col gap-0 border-b bg-background/95 px-4 py-2 backdrop-blur-sm">
           <div className="flex items-center justify-between gap-3">
             <div className="text-sm font-medium text-muted-foreground">
               Select which build of the app you want to use.

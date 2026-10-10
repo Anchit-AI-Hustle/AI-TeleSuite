@@ -197,7 +197,7 @@ export default function CombinedCallAnalysisDashboardPage() {
                     Product: {selectedItem.product || "N/A"} | Generated: {format(parseISO(selectedItem.timestamp), 'PPPP pppp')}
                 </DialogDesc>
                 </DialogHeader>
-                <ScrollArea className="flex-grow p-4 overflow-y-auto">
+                <ScrollArea className="grow p-4 overflow-y-auto">
                     <CombinedCallAnalysisResultsCard 
                         report={selectedItem.details.output}
                         individualScores={selectedItem.details.input.callReports || []}

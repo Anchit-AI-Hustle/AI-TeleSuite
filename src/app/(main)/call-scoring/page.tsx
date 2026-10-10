@@ -406,7 +406,7 @@ export default function CallScoringPage() {
           <CallScoringResultsTable results={results} progressById={progressById} />
         )}
          {results.length === 0 && !isLoading && !formError && (
-          <Card className="w-full max-w-lg shadow-sm">
+          <Card className="w-full max-w-lg shadow-xs">
             <CardHeader>
                 <CardTitle className="text-lg flex items-center">
                     <ListChecks className="h-5 w-5 mr-2 text-accent"/>

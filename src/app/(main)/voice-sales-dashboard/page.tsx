@@ -467,7 +467,7 @@ export default function VoiceSalesDashboardPage() {
                     Customer: {selectedCall.details.input.userName || "N/A"} | Product: {selectedCall.product || "N/A"} | Timestamp: {format(parseISO(selectedCall.timestamp), 'PPPP pppp')}
                 </DialogDesc>
                 </DialogHeader>
-                <ScrollArea className="flex-grow p-4 overflow-y-auto">
+                <ScrollArea className="grow p-4 overflow-y-auto">
                     {selectedCall.details.origin === 'call-scoring-backfill' && (
                         <Alert variant="default" className="mb-4">
                             <AlertCircleIcon className="h-4 w-4" />

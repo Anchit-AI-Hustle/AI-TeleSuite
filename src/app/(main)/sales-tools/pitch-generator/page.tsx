@@ -208,7 +208,7 @@ export default function PitchGeneratorPage() {
         )}
         {pitch && !isLoading && <PitchCard pitch={pitch} />}
         {!pitch && !isLoading && !error && (
-          <Card className="w-full max-w-lg shadow-sm">
+          <Card className="w-full max-w-lg shadow-xs">
             <CardHeader>
                 <CardTitle className="text-lg flex items-center">
                     <Lightbulb className="h-5 w-5 mr-2 text-accent"/>

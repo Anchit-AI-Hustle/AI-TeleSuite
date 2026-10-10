@@ -266,15 +266,15 @@ export function CombinedCallAnalysisResultsCard({ report, individualScores }: Co
                                     <div className="flex items-center gap-1.5 truncate flex-1">
                                       {item.audioDataUri && (
                                         <span title="Audio available" className="inline-flex">
-                                          <PlayCircle className="h-3 w-3 text-primary flex-shrink-0" />
+                                          <PlayCircle className="h-3 w-3 text-primary shrink-0" />
                                         </span>
                                       )}
                                       <span className="truncate" title={item.fileName}>{item.fileName}</span>
                                     </div>
-                                    <Badge variant={item.scoreOutput.callCategorisation === "Error" ? "destructive" : "secondary"} className="text-xs flex-shrink-0">
+                                    <Badge variant={item.scoreOutput.callCategorisation === "Error" ? "destructive" : "secondary"} className="text-xs shrink-0">
                                         Score: {item.scoreOutput.overallScore.toFixed(1)}/5 ({item.scoreOutput.callCategorisation})
                                     </Badge>
-                                    <Button variant="outline" size="xs" className="flex-shrink-0" onClick={() => handleViewIndividualCall(item.fileName)}>View</Button>
+                                    <Button variant="outline" size="xs" className="shrink-0" onClick={() => handleViewIndividualCall(item.fileName)}>View</Button>
                                 </li>
                             ))}
                             </ul>
@@ -298,7 +298,7 @@ export function CombinedCallAnalysisResultsCard({ report, individualScores }: Co
                     File: {selectedIndividualFileName}
                 </DialogDesc>
             </DialogHeader>
-            <ScrollArea className="flex-grow overflow-y-auto">
+            <ScrollArea className="grow overflow-y-auto">
               <div className="p-4 md:p-6">
                 <CallScoringResultsCard 
                     results={selectedIndividualCall} 

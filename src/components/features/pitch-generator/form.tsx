@@ -330,7 +330,7 @@ export function PitchForm({ onSubmit, isLoading }: PitchFormProps) {
               </AccordionItem>
             </Accordion>
             
-            <Button type="submit" className="w-full !mt-6" disabled={isLoading || !product}>
+            <Button type="submit" className="w-full mt-6!" disabled={isLoading || !product}>
               {isLoading ? "Generating Pitch..." : "Generate Pitch"}
             </Button>
           </form>

@@ -187,7 +187,7 @@ export function DataAnalysisDashboardTable({ history, selectedIds, onSelectionCh
       <div className="w-full mt-2 shadow-lg rounded-lg border bg-card">
         <ScrollArea className="h-[calc(100vh-280px)] md:h-[calc(100vh-250px)]">
           <Table>
-            <TableHeader className="sticky top-0 bg-muted/50 backdrop-blur-sm z-10">
+            <TableHeader className="sticky top-0 bg-muted/50 backdrop-blur-xs z-10">
               <TableRow>
                  <TableHead className="w-[50px]">
                     <Checkbox
@@ -279,7 +279,7 @@ export function DataAnalysisDashboardTable({ history, selectedIds, onSelectionCh
                     Report: {selectedItem.details.analysisOutput?.reportTitle || (selectedItem.details.error ? "Error" : "Untitled")} | Generated: {format(parseISO(selectedItem.timestamp), 'PP p')}
                 </DialogDesc>
             </DialogHeader>
-            <ScrollArea className="flex-grow overflow-y-auto">
+            <ScrollArea className="grow overflow-y-auto">
               <div className="p-3 md:p-6">
                 {selectedItem.details.error ? (
                      <div className="space-y-3 text-sm text-destructive bg-destructive/10 p-4 rounded-md">
