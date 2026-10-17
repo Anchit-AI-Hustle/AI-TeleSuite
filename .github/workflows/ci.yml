@@ -8,7 +8,7 @@ jobs:
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-node@v7
-        with: { node-version: 20, cache: npm }
+        with: { node-version: 22, cache: npm }
       - run: npm ci
       # The repository currently has known type debt across legacy AI flows and
       # explicitly sets nextConfig.typescript.ignoreBuildErrors=true. Keep the
