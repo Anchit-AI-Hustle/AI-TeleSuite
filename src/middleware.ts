@@ -8,13 +8,14 @@ import type { NextRequest } from 'next/server';
 import { SESSION_COOKIE, sessionSecret, verifySessionToken } from '@/lib/auth/session';
 import { safeNextPath } from '@/lib/auth/next-path';
 
-const PUBLIC_PATHS = new Set(['/login', '/api/auth', '/api/cleanup-cache']);
+const PUBLIC_PATHS = new Set(['/login', '/signup', '/api/auth', '/api/cleanup-cache']);
 
 export async function middleware(request: NextRequest) {
   const { pathname, search } = request.nextUrl;
-  const signedIn = await verifySessionToken(request.cookies.get(SESSION_COOKIE)?.value, sessionSecret());
+  // verifySessionToken returns the user id now, so null is the only "no".
+  const signedIn = (await verifySessionToken(request.cookies.get(SESSION_COOKIE)?.value, sessionSecret())) !== null;
 
-  if (pathname === '/login') {
+  if (pathname === '/login' || pathname === '/signup') {
     if (signedIn) {
       return NextResponse.redirect(new URL(safeNextPath(request.nextUrl.searchParams.get('next'), request.nextUrl.origin), request.url));
     }
@@ -26,7 +27,7 @@ export async function middleware(request: NextRequest) {
 
   if (pathname.startsWith('/api/')) {
     return NextResponse.json(
-      { ok: false, error: 'Sign in with your PIN first.' },
+      { ok: false, error: 'Sign in with your mobile number and PIN first.' },
       { status: 401, headers: { 'Cache-Control': 'no-store' } }
     );
   }

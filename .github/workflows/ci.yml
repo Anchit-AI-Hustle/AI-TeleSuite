@@ -14,6 +14,9 @@ jobs:
       # explicitly sets nextConfig.typescript.ignoreBuildErrors=true. Keep the
       # diagnostics visible while using the production build as the merge gate.
       - run: npm run typecheck || echo "::warning::Known repository-wide type errors remain; see the typecheck output above"
+      # The sign-in rules run on a fresh clone with no framework, no database
+      # and no network, so they belong in front of the build, not beside it.
+      - run: npm test
       - run: npm run build
         env:
           GOOGLE_API_KEY: ci-placeholder

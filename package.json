@@ -15,7 +15,8 @@
     "predev": "echo 'Starting dev server...'",
     "dev": "ESLINT_NO_DEV_ERRORS=true next dev --webpack",
     "start": "next start",
-    "post-commit": "git push && vercel --prod || true"
+    "post-commit": "git push && vercel --prod || true",
+    "test": "node --experimental-strip-types --test tests/*.test.ts"
   },
   "dependencies": {
     "@fastify/busboy": "^3.2.0",
@@ -25,6 +26,7 @@
     "@google/generative-ai": "^0.24.1",
     "@hookform/resolvers": "^4.1.3",
     "@huggingface/inference": "^4.13.2",
+    "@neondatabase/serverless": "^1.2.0",
     "@radix-ui/react-accordion": "^1.2.3",
     "@radix-ui/react-alert-dialog": "^1.1.6",
     "@radix-ui/react-avatar": "^1.1.11",
