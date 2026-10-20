@@ -44,3 +44,6 @@ key.json
 *.tsbuildinfo
 next-env.d.ts
 
+
+# Written by `npm run lint`; it was committed once by accident.
+.eslintcache

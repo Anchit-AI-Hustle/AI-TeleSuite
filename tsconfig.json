@@ -10,6 +10,9 @@
     "skipLibCheck": true,
     "strict": true,
     "noEmit": true,
+    // tests/auth.test.ts imports with explicit .ts paths because that is what
+    // `node --experimental-strip-types` resolves; tsc needs telling.
+    "allowImportingTsExtensions": true,
     "esModuleInterop": true,
     "module": "esnext",
     "moduleResolution": "bundler",
