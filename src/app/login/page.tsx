@@ -20,6 +20,15 @@ const CODES = Object.keys(PHONE_CC).sort((a, b) =>
   a === DEFAULT_CC ? -1 : b === DEFAULT_CC ? 1 : PHONE_CC[a].name.localeCompare(PHONE_CC[b].name)
 );
 
+// A number is often pasted whole: "+91 98100 02023". Keeping a leading + lets
+// normPhone read the country code out of the number itself instead of the
+// select, so a pasted number is accepted rather than refused for being twelve
+// digits long. A + anywhere else is not a number anyone types.
+function phoneInput(raw: string): string {
+  const digits = raw.replace(/[^\d\s]/g, '').slice(0, 15);
+  return raw.trimStart().startsWith('+') ? '+' + digits : digits;
+}
+
 export default function LoginPage() {
   const [mode, setMode] = useState<Mode>('signin');
   const [cc, setCc] = useState(DEFAULT_CC);
@@ -35,6 +44,10 @@ export default function LoginPage() {
     // The old browser-only sign-in kept a flag here. It no longer grants
     // anything; clear it so it does not linger.
     try { window.localStorage.removeItem('aiTeleSuiteDemoAuth'); } catch { /* storage blocked */ }
+    // /signup sends people here with ?mode=signup. Read it AFTER mount: the
+    // server has already rendered the sign-in tab, and picking a different
+    // tab during render is a hydration mismatch.
+    if (new URLSearchParams(window.location.search).get('mode') === 'signup') setMode('signup');
   }, []);
 
   const switchMode = (next: Mode) => {
@@ -143,7 +156,7 @@ export default function LoginPage() {
                   placeholder={cc === '+91' ? '98100 02023' : 'Mobile number'}
                   className="flex-1"
                   value={phone}
-                  onChange={(e) => setPhone(e.target.value.replace(/[^\d\s]/g, '').slice(0, 15))}
+                  onChange={(e) => setPhone(phoneInput(e.target.value))}
                 />
               </div>
             </div>
