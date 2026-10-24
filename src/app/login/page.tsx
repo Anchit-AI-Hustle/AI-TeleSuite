@@ -25,8 +25,25 @@ const CODES = Object.keys(PHONE_CC).sort((a, b) =>
 // select, so a pasted number is accepted rather than refused for being twelve
 // digits long. A + anywhere else is not a number anyone types.
 function phoneInput(raw: string): string {
-  const digits = raw.replace(/[^\d\s]/g, '').slice(0, 15);
-  return raw.trimStart().startsWith('+') ? '+' + digits : digits;
+  // The cap counts DIGITS, not characters. Counting characters counted the
+  // spaces too, so a pasted "+49 151 2345 6789" came out as "+49 151 2345 678"
+  // - and +49 accepts 7 to 11 local digits, so normPhone took the truncated
+  // number as a valid one. The form would have registered a number its owner
+  // never typed, and bound their PIN to it. Fifteen digits is E.164's own
+  // limit, so nothing real reaches it.
+  const plus = raw.trimStart().startsWith('+');
+  let digits = 0;
+  let out = '';
+  for (const ch of raw) {
+    if (ch >= '0' && ch <= '9') {
+      if (digits >= 15) break;
+      digits += 1;
+      out += ch;
+    } else if (ch === ' ') {
+      out += ch;
+    }
+  }
+  return plus ? '+' + out : out;
 }
 
 export default function LoginPage() {
