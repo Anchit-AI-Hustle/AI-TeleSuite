@@ -39,6 +39,9 @@ const nextConfig = {
     serverActions: {
       bodySizeLimit: '150mb',
     },
+    // Records that this version bump was the security upgrade Next.js asks an
+    // agent to run, so the build stops nudging for one already done.
+    agentUpgrade: 'security',
   },
 };
 
