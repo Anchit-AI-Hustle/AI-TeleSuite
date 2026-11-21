@@ -5,7 +5,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import vm from 'node:vm';
-import { DEMO_PREFIX, isDemoCookie, storageKeyFor } from '../src/lib/demo.ts';
+import { DEMO_PREFIX, demoEnded, isDemoCookie, storageKeyFor } from '../src/lib/demo.ts';
 
 const REAL = 'aiTeleSuiteActivityLog';
 const seed = readFileSync(new URL('../public/demo-seed.js', import.meta.url), 'utf8');
@@ -60,4 +60,13 @@ test('when the demo ends only demo data is removed; real records survive', () =>
 test('a visitor who was never in the demo is left alone', () => {
   const { store } = browser('', { [REAL]: '[]' });
   assert.deepEqual([...store.keys()], [REAL]);
+});
+
+test('a tab opened in the demo knows the demo has ended once someone signs in from another tab', () => {
+  // Signing in clears the demo cookie for every tab. A tab still showing the demo must
+  // restart on real storage before any real work is saved, or that work would be lost.
+  assert.equal(demoEnded(true, 'ats_session=abc'), true);
+  assert.equal(demoEnded(true, 'ats_demo=1'), false);
+  assert.equal(demoEnded(false, 'ats_session=abc'), false);
+  assert.equal(demoEnded(false, 'ats_demo=1'), false);
 });

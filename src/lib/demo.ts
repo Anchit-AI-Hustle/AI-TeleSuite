@@ -22,3 +22,13 @@ export function isDemoVisitor(): boolean {
 export function leaveDemo(): void {
   if (typeof document !== 'undefined') document.cookie = `${DEMO_COOKIE}=; path=/; max-age=0`;
 }
+
+/**
+ * True when a tab that started in the demo is no longer in it: someone signed
+ * in (or left the demo) in another tab, which clears the cookie for all of
+ * them. Such a tab has to reload before it saves anything, because it is still
+ * holding the demo's copy of the data.
+ */
+export function demoEnded(startedInDemo: boolean, cookie: string | null | undefined): boolean {
+  return startedInDemo && !isDemoCookie(cookie);
+}

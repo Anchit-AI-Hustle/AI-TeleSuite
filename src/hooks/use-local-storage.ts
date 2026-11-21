@@ -62,6 +62,13 @@ export function useLocalStorage<T>(logicalKey: string, initialValueProp: T | (()
     }, []);
 
     const setValue: SetValue<T> = useCallback(value => {
+        // A tab that started in the demo and is no longer in it (someone signed in
+        // from another tab) must not save: it would write into the demo's copy,
+        // which is deleted. Reload onto real storage instead.
+        if (typeof document !== 'undefined' && key !== storageKeyFor(logicalKey, document.cookie)) {
+            window.location.reload();
+            return;
+        }
         try {
             const valueToStore = value instanceof Function ? value(storedValue) : value;
             setStoredValue(valueToStore);
@@ -88,7 +95,7 @@ export function useLocalStorage<T>(logicalKey: string, initialValueProp: T | (()
         } catch(error) {
             console.error(`Error calculating value to store for key “${key}”:`, error);
         }
-    }, [key, storedValue]);
+    }, [key, logicalKey, storedValue]);
     
     useEffect(() => {
         const handleStorageChange = (e: StorageEvent) => {
