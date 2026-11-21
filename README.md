@@ -8,17 +8,28 @@ This document reflects the v1.1 state of the application. The application featur
 
 ## Sign-in
 
-The app has one way in: a 4-digit PIN, checked on the server by `POST /api/auth`.
+Each person has their own account: a mobile number and a 4-digit PIN, checked on the
+server by `POST /api/auth`. Sign-up is open and lives on the same screen as sign-in.
 A right PIN sets an httpOnly session cookie (30 days); `src/middleware.ts` turns away
-every page and API route without it, except `/login`, `/api/auth` and the cache-cleanup cron.
+every page and API route without it, except `/login`, `/signup`, `/api/auth` and the
+cache-cleanup cron.
 
-1. Pick a PIN and run `node scripts/pin-hash.mjs 4827`.
-2. Set the printed `salt:hash` as `APP_PIN_HASH` on the server (Vercel project env vars, or `.env.local`).
-   Until it is set, sign-in stays closed.
+The server needs two things. Without either one, `/api/auth` answers 503 to every
+request the sign-in screen makes and nobody can get in, so a production build on Vercel is refused until both
+are set (`scripts/check-env.js`).
+
+1. `DATABASE_URL`: a Neon Postgres connection string, where accounts are kept. On
+   Vercel: project > Storage > Create Database > Neon, connected to this project, which
+   sets the variable for you. The `auth_users` table is created on first use; there is
+   no migration to run. `POSTGRES_URL` is read too.
+2. `SESSION_SECRET`: any long random string, which signs the session cookie.
+   `node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"`.
+   Changing it signs every device out. An existing `APP_PIN_HASH` is used when this is unset.
 3. Optional: set `UPSTASH_REDIS_REST_URL` and `UPSTASH_REDIS_REST_TOKEN` so the lockout
    (5 wrong tries, then 15 minutes) is shared across server instances.
 
-To change the PIN, set a new `APP_PIN_HASH`. Every signed-in device is signed out.
+Environment variables only reach a deployment built after they were set: redeploy
+after adding them.
 
 # Test change for auto-deployment
 

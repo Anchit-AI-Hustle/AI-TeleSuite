@@ -72,6 +72,24 @@ const ENV_CONFIG = {
   ],
 };
 
+// Sign-in. Accounts live in Postgres and the session cookie is signed with a
+// server secret; src/app/api/auth/route.ts answers 503 to every sign-up and
+// sign-in when either is missing. Every page is behind sign-in, so a server
+// without them is an app nobody can open - and nothing about the build shows
+// it. Each entry lists the names the route accepts, first one preferred.
+const SIGN_IN = [
+  {
+    names: ['DATABASE_URL', 'POSTGRES_URL'],
+    description: 'Postgres connection string for accounts (Neon). The auth_users table is created on first use.',
+    fix: 'Vercel: project > Storage > Create Database > Neon, connected to this project. It sets DATABASE_URL for you.',
+  },
+  {
+    names: ['SESSION_SECRET', 'APP_PIN_HASH'],
+    description: 'Secret the session cookie is signed with. Any long random string.',
+    fix: 'node -e "console.log(require(\'crypto\').randomBytes(32).toString(\'hex\'))"',
+  },
+];
+
 // Load environment variables from .env files
 function loadEnvFiles() {
   const envFiles = ['.env.local', '.env'];
@@ -182,6 +200,35 @@ function validateEnvironment() {
         log(`  Value: ${value}`, 'cyan');
       }
     }
+  }
+
+  // Sign-in. Reported by name only: these values are credentials, and a build
+  // log is read by more people than the env var page is.
+  console.log('');
+  logSection('Sign-in');
+  const isProductionDeploy = process.env.VERCEL_ENV === 'production';
+  for (const config of SIGN_IN) {
+    // The same rule the server applies (users.ts, session.ts): the first name
+    // that is set at all wins, and only then is it trimmed. A whitespace-only
+    // DATABASE_URL therefore hides a good POSTGRES_URL, here as it does there.
+    const first = config.names.find((n) => getVariableValue(n, loadedVars));
+    const found = first && getVariableValue(first, loadedVars).trim() ? first : null;
+    if (found) {
+      log(`✓ ${found}: SET`, 'green');
+      continue;
+    }
+    const name = config.names[0];
+    log(`${isProductionDeploy ? '✗' : '○'} ${name}: MISSING`, isProductionDeploy ? 'red' : 'yellow');
+    log(`  Description: ${config.description}`, 'yellow');
+    const entry = {
+      variable: name,
+      issue: 'Not set, so nobody can sign in or sign up: /api/auth answers 503 to every request.',
+      suggestion: config.fix,
+    };
+    // Only a production deploy is refused. A failed build leaves the previous
+    // deployment serving; a "successful" one replaces it with a locked door.
+    // Local builds, previews and CI have no accounts to protect, so they warn.
+    (isProductionDeploy ? issues : warnings).push(entry);
   }
 
   // Summary
