@@ -223,6 +223,10 @@ export default function LoginPage() {
               {isSubmitting ? 'Checking...' : isSignup ? 'Create account' : 'Sign in'}
             </Button>
           </form>
+          <p className="mt-4 text-center text-sm text-muted-foreground">
+            Just looking?{' '}
+            <a href="/demo" className="font-medium text-primary underline underline-offset-4">Try the demo with sample calls</a>, no sign-up.
+          </p>
         </CardContent>
       </Card>
     </div>
