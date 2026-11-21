@@ -25,7 +25,11 @@ export async function middleware(request: NextRequest) {
   const signedIn = (await verifySessionToken(request.cookies.get(SESSION_COOKIE)?.value, sessionSecret())) !== null;
 
   if (pathname === '/demo') {
-    if (signedIn) return NextResponse.redirect(new URL('/home', request.url));
+    if (signedIn) {
+      const home = NextResponse.redirect(new URL('/home', request.url));
+      home.cookies.set(DEMO_COOKIE, '', { path: '/', maxAge: 0 });
+      return home;
+    }
     const res = NextResponse.redirect(new URL('/home', request.url));
     res.cookies.set(DEMO_COOKIE, '1', { path: '/', maxAge: DEMO_MAX_AGE, sameSite: 'lax', secure: process.env.NODE_ENV === 'production' });
     return res;
@@ -37,6 +41,13 @@ export async function middleware(request: NextRequest) {
       return NextResponse.redirect(new URL(safeNextPath(request.nextUrl.searchParams.get('next'), request.nextUrl.origin), request.url));
     }
     return NextResponse.next();
+  }
+  if (signedIn && request.cookies.has(DEMO_COOKIE)) {
+    // Signing in ends the demo. The cookie goes before the page's scripts run,
+    // so the app starts on the person's own storage, not the demo's copy.
+    const res = NextResponse.next();
+    res.cookies.set(DEMO_COOKIE, '', { path: '/', maxAge: 0 });
+    return res;
   }
   if (PUBLIC_PATHS.has(pathname) || signedIn) {
     return NextResponse.next();

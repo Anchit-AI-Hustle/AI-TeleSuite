@@ -1,5 +1,6 @@
 "use client";
 
+import { leaveDemo } from '@/lib/demo';
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React, { useState, useEffect, useMemo } from "react";
@@ -195,6 +196,7 @@ export function AppSidebar({ setIsPageLoading }: AppSidebarProps) {
     setCurrentProfile(USER_PROFILES[0] ?? "Anchit");
     // Clear the httpOnly session cookie on the server, then load the sign-in
     // page fresh so no cached signed-in page survives.
+    leaveDemo();   // "Sign out" in the demo leaves the demo
     void fetch('/api/auth', { method: 'DELETE' })
       .catch(() => undefined)
       .finally(() => window.location.assign('/login'));

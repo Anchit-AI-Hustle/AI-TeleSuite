@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useCallback, Dispatch, SetStateAction, useRef } from 'react';
+import { storageKeyFor } from '@/lib/demo';
 
 type SetValue<T> = Dispatch<SetStateAction<T>>;
 
@@ -35,7 +36,11 @@ function addToSaveQueue(saveFunction: () => Promise<void>) {
 // --- End Save Queue Implementation ---
 
 
-export function useLocalStorage<T>(key: string, initialValueProp: T | (() => T)): [T, SetValue<T>] {
+export function useLocalStorage<T>(logicalKey: string, initialValueProp: T | (() => T)): [T, SetValue<T>] {
+    // A demo visitor gets a separate copy of every key, so the demo never reads,
+    // changes or deletes real work stored in this browser. Decided once per mount:
+    // entering or leaving the demo is always a full page load.
+    const [key] = useState(() => storageKeyFor(logicalKey, typeof document === 'undefined' ? '' : document.cookie));
     const [storedValue, setStoredValue] = useState<T>(() => {
         if (typeof window === 'undefined') {
             return typeof initialValueProp === 'function' ? (initialValueProp as () => T)() : initialValueProp;
@@ -57,6 +62,13 @@ export function useLocalStorage<T>(key: string, initialValueProp: T | (() => T))
     }, []);
 
     const setValue: SetValue<T> = useCallback(value => {
+        // A tab that started in the demo and is no longer in it (someone signed in
+        // from another tab) must not save: it would write into the demo's copy,
+        // which is deleted. Reload onto real storage instead.
+        if (typeof document !== 'undefined' && key !== storageKeyFor(logicalKey, document.cookie)) {
+            window.location.reload();
+            return;
+        }
         try {
             const valueToStore = value instanceof Function ? value(storedValue) : value;
             setStoredValue(valueToStore);
@@ -83,7 +95,7 @@ export function useLocalStorage<T>(key: string, initialValueProp: T | (() => T))
         } catch(error) {
             console.error(`Error calculating value to store for key “${key}”:`, error);
         }
-    }, [key, storedValue]);
+    }, [key, logicalKey, storedValue]);
     
     useEffect(() => {
         const handleStorageChange = (e: StorageEvent) => {
