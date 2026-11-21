@@ -115,8 +115,11 @@ export default function LoginPage() {
 
   const isSignup = mode === 'signup';
 
+  // w-full on the outer box: the root layout's SidebarProvider is a flex row,
+  // and a row child is only as wide as its content. Without it this box
+  // shrinks to the card and centres the card inside itself, at the left edge.
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-background p-4">
+    <div className="min-h-screen w-full flex flex-col items-center justify-center bg-background p-4">
       <Card className="w-full max-w-sm">
         <CardHeader className="text-center space-y-4">
           <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-primary/10 text-primary">

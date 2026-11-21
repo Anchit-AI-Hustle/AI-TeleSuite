@@ -11,13 +11,13 @@
 //   - each PIN is scrypt-derived per account, so a copy of the table is not a
 //     set of working logins;
 //   - five wrong PINs lock THAT NUMBER for fifteen minutes (lockout.ts);
-//   - sign-ups are capped per client address, so one script cannot mint
-//     accounts in a loop;
+//   - sign-ups are capped per client address (five, then a 15-minute pause),
+//     so one script cannot mint accounts in a loop;
 //   - a number with no account and a wrong PIN get the SAME answer, so the
 //     endpoint never becomes a way to ask which numbers are registered.
 import { NextRequest, NextResponse } from 'next/server';
 import { isPinShape, pinError, readPinHashFromEnv, verifyPin } from '@/lib/auth/pin';
-import { lockoutStore, lockMessage, wrongPinMessage, MAX_TRIES } from '@/lib/auth/lockout';
+import { lockoutStore, lockMessage, wrongPinMessage, claimCapped, capMessage, MAX_TRIES } from '@/lib/auth/lockout';
 import { SESSION_COOKIE, createSessionToken, sessionCookieOptions, sessionSecret } from '@/lib/auth/session';
 import { normPhone, phoneError } from '@/lib/auth/phone';
 import { checkPin, createUser, databaseUrl, findByPhone, type UserRow } from '@/lib/auth/users';
@@ -136,12 +136,12 @@ export async function POST(req: NextRequest) {
     const bad = pinError(pin);
     if (bad) return reply(400, { ok: false, error: bad });
 
-    const store = lockoutStore();
+    // Five from one address, then a 15-minute pause. The pause is what ends
+    // the refusal: a whole office signs up from one address, and a count that
+    // nothing clears turns "try again later" into never.
     try {
-      const claim = await store.claim(`signup:${clientIp(req)}`);
-      if (!claim.ok || claim.tries > SIGNUP_MAX_PER_IP) {
-        return reply(429, { ok: false, error: 'Too many accounts created from here. Please try again later.' });
-      }
+      const cap = await claimCapped(lockoutStore(), `signup:${clientIp(req)}`, SIGNUP_MAX_PER_IP);
+      if (!cap.ok) return reply(429, { ok: false, locked: true, error: capMessage(cap.lockedUntil) });
     } catch (e) {
       console.error('signup: lockout store unavailable', e instanceof Error ? e.message : e);
       return reply(503, { ok: false, error: 'Sign-up is unavailable right now. Please try again in a minute.' });
