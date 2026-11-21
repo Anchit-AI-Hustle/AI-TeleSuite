@@ -115,7 +115,32 @@ export function lockoutStore(): LockoutStore {
   return chosen;
 }
 
+// ---- a rate cap, as opposed to a wrong-guess count -------------------------
+/**
+ * Let `max` claims through, then pause the identifier for LOCK_MS.
+ *
+ * A wrong-PIN count is cleared by the right PIN. A cap on sign-ups has nothing
+ * that clears it, so the pause has to: lock() sets a lock that expires on its
+ * own and deletes the count with it. Counting alone, without this, refuses the
+ * identifier for as long as the count survives - which in Redis is forever.
+ */
+export async function claimCapped(
+  store: LockoutStore,
+  id: string,
+  max: number
+): Promise<{ ok: true } | { ok: false; lockedUntil: number }> {
+  const claim = await store.claim(id);
+  if (!claim.ok) return claim;
+  if (claim.tries > max) return { ok: false, lockedUntil: await store.lock(id) };
+  return { ok: true };
+}
+
 // ---- words ----------------------------------------------------------------
+export function capMessage(lockedUntil: number, now: number = Date.now()): string {
+  const mins = Math.max(1, Math.ceil((lockedUntil - now) / 60_000));
+  return `Too many accounts created from here. Try again in ${mins} ${mins === 1 ? 'minute' : 'minutes'}.`;
+}
+
 export function lockMessage(lockedUntil: number, now: number = Date.now()): string {
   const mins = Math.max(1, Math.ceil((lockedUntil - now) / 60_000));
   return `Too many wrong tries. Try again in ${mins} ${mins === 1 ? 'minute' : 'minutes'}.`;
