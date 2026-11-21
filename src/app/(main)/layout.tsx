@@ -8,6 +8,7 @@ import { Info } from 'lucide-react';
 import { AppVersionSwitcher } from '@/components/layout/app-version-switcher';
 import { useAppVersion } from '@/context/app-version-context';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
+import { DemoBanner } from '@/components/layout/demo-banner';
 
 // Access is enforced on the server by src/middleware.ts: no page under this
 // layout is served without a valid PIN session cookie.
@@ -33,6 +34,7 @@ export default function MainAppLayout({
             </div>
             <AppVersionSwitcher />
           </div>
+          <DemoBanner />
           {appVersion === 'open-source' && (
             <Alert className="mt-2 border-amber-300 bg-amber-50 text-amber-900">
               <Info className="h-4 w-4" />

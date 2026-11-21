@@ -44,6 +44,8 @@ export default function RootLayout({
         <link rel="stylesheet" href={`${PORTFOLIO_ASSETS}/project-playbooks.css`} />
       </head>
       <body className={`font-sans antialiased`}>
+        {/* Public demo sample data. It has to run before the app reads the browser's storage. */}
+        <Script src="/demo-seed.js" strategy="beforeInteractive" />
         <AppVersionProvider>
           <UserProfileProvider>
            <ProductProvider>
