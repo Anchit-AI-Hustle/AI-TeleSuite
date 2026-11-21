@@ -11,6 +11,7 @@ import { Label } from '@/components/ui/label';
 import { ShieldCheck, LockKeyhole } from 'lucide-react';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { safeNextPath } from '@/lib/auth/next-path';
+import { leaveDemo } from '@/lib/demo';
 import { PHONE_CC, DEFAULT_CC } from '@/lib/auth/phone';
 
 type Mode = 'signin' | 'signup';
@@ -97,6 +98,7 @@ export default function LoginPage() {
         | { ok?: boolean; error?: string; exists?: boolean }
         | null;
       if (res.ok && data?.ok) {
+        leaveDemo();   // signing in ends the demo, so the app loads the person's own data
         const next = new URLSearchParams(window.location.search).get('next');
         window.location.assign(safeNextPath(next, window.location.origin));
         return;
